@@ -10,15 +10,18 @@ use tokio_stream::StreamMap;
 
 #[tokio::main]
 async fn main() {
-    let timetable1 = [1, 4, 12, 30, 40, 50];
-    let timetable2 = [2, 5, 11, 29, 41, 51];
+    let timetable1 = [3, 6, 9, 12, 18, 21, 24, 27, 33, 35, 38, 41];
+    let timetable2 = [5, 10, 20, 25, 35, 40, 50, 55];
+    let timetable3 = [15, 30, 45];
 
     let stream1 = make_stream(&timetable1);
     let stream2 = make_stream(&timetable2);
+    let stream3 = make_stream(&timetable3);
 
     let mut map = StreamMap::new();
-    map.insert(1, stream1);
-    map.insert(2, stream2);
+    map.insert("fizz", stream1);
+    map.insert("buzz", stream2);
+    map.insert("fizzbuzz", stream3);
 
     // careful about empty stream map! May want to keep program alive when stream map is empty. Somebody else may insert in the future.
     // in a select!, that's less of an issue - just don't expect next().await on the map to be Some(_).
