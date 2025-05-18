@@ -15,6 +15,26 @@ async fn main() {
 
     // careful about empty stream map! May want to keep program alive when stream map is empty. Somebody else may insert in the future.
     // in a select!, that's less of an issue - just don't expect next().await on the map to be Some(_).
+    let mut counter = 0;
+    while let Some(stream_id) = schedule.next().await {
+        println!("{}@{}", stream_id, Local::now().second());
+        if counter == 5 {
+            break;
+        }
+        counter += 1;
+    }
+    println!("Unregistering fizz");
+    schedule.remove_timetable(&"fizz");
+    let mut counter = 0;
+    while let Some(stream_id) = schedule.next().await {
+        println!("{}@{}", stream_id, Local::now().second());
+        if counter == 5 {
+            break;
+        }
+        counter += 1;
+    }
+    println!("Registering noise");
+    schedule.add_timetable("noise", (0..60).collect());
     while let Some(stream_id) = schedule.next().await {
         println!("{}@{}", stream_id, Local::now().second());
     }
