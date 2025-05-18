@@ -4,7 +4,7 @@ use tokio_stream::StreamExt;
 
 #[tokio::main]
 async fn main() {
-    let timetable1 = vec![3, 6, 9, 12, 18, 21, 24, 27, 33, 35, 38, 41];
+    let timetable1 = vec![3, 6, 9, 12, 18, 21, 24, 27, 33, 36, 39, 42];
     let timetable2 = vec![5, 10, 20, 25, 35, 40, 50, 55];
     let timetable3 = vec![15, 30, 45];
 
